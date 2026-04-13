@@ -1,0 +1,28 @@
+﻿@using CardClicker.Core
+@rendermode InteractiveWebAssembly
+@page "/"
+
+<PageTitle>Home</PageTitle>
+<h1 role="status">Current Score: @currentTotal</h1>
+@if (twoOfSpades.CanUpgrade(currentTotal, 50))
+{
+    <button @onclick="() => IncrementCount(twoOfSpades.ClickRate)">Click Upgrade</button>
+}
+<button @onclick="() => IncrementCount(1)">Click Me!</button>
+
+<h1></h1>
+
+Welcome to your new app.
+@twoOfSpades.Name
+
+    @code {
+        int currentTotal = 0;
+        private void IncrementCount(int amount)
+        {
+            currentTotal += amount;
+        }
+        ClickUpgrade twoOfSpades = new(5, "yes", "Two of Spades");
+    
+    
+}
+

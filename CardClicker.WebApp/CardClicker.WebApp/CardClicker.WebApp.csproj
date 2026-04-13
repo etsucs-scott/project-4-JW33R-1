@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CardClicker.Core\CardClicker.Core.csproj" />
     <ProjectReference Include="..\CardClicker.WebApp.Client\CardClicker.WebApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.14" />
   </ItemGroup>

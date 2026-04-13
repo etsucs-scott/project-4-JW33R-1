@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\CardClicker.Core\CardClicker.Core.csproj" />
+  </ItemGroup>
+
 </Project>
