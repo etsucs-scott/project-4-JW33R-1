@@ -1,3 +1,4 @@
+using CardClicker.Core;
 using CardClicker.WebApp.Client.Pages;
 using CardClicker.WebApp.Components;
 
@@ -8,7 +9,7 @@ namespace CardClicker.WebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddSingleton<GameEngine>();
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveWebAssemblyComponents();

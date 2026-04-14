@@ -1,3 +1,4 @@
+using CardClicker.Core;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace CardClicker.WebApp.Client
@@ -8,6 +9,7 @@ namespace CardClicker.WebApp.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+            builder.Services.AddSingleton<GameEngine>();
             await builder.Build().RunAsync();
         }
     }

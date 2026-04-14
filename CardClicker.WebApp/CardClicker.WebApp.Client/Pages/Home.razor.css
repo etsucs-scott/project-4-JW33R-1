@@ -1,0 +1,12 @@
+﻿
+h3 {
+        color: red;
+        padding-left: 20%;
+        padding-top: 100%
+}
+h1 {
+    color: red;
+    border: dotted;
+    border-color: blue;
+    margin: 0;
+}

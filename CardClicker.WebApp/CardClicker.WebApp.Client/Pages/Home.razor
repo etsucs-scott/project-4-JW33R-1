@@ -1,28 +1,22 @@
 ﻿@using CardClicker.Core
 @rendermode InteractiveWebAssembly
+@inject GameEngine gameEngine
 @page "/"
-
 <PageTitle>Home</PageTitle>
-<h1 role="status">Current Score: @currentTotal</h1>
-@if (twoOfSpades.CanUpgrade(currentTotal, 50))
+<h1 role="status">Current Score: @gameEngine.CurrentTotal</h1>
+@if (gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].CanUpgrade(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].Cost))
 {
-    <button @onclick="() => IncrementCount(twoOfSpades.ClickRate)">Click Upgrade</button>
+    <button style="align-self: center; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("2 of Spades")'>Click Upgrade</button>
 }
-<button @onclick="() => IncrementCount(1)">Click Me!</button>
+<button @onclick="() => gameEngine.IncrementCount()">Click Me!</button>
 
-<h1></h1>
+<h3 style="border-color: red;">Hello</h3>
 
-Welcome to your new app.
-@twoOfSpades.Name
-
-    @code {
-        int currentTotal = 0;
-        private void IncrementCount(int amount)
-        {
-            currentTotal += amount;
-        }
-        ClickUpgrade twoOfSpades = new(5, "yes", "Two of Spades");
-    
-    
+<h3>Welcome to your new app.</h3>
+@code {
+    protected override void OnInitialized()
+    {
+        gameEngine.AddUpgrades();
+    }
 }
 

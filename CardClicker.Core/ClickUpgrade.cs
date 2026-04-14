@@ -11,11 +11,13 @@ namespace CardClicker.Core
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int ClickRate { get; private set; }
-        public ClickUpgrade(int clickRate, string description, string name)
+        public int Cost { get; private set; }
+        public ClickUpgrade(int clickRate, string description, string name, int cost)
         {
             ClickRate = clickRate;
             Description = description;
             Name = name;
+            Cost = cost;
         }
         public bool CanUpgrade(int totalScore, int upgradeCost)
         {
