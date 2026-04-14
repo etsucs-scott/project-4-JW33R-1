@@ -4,15 +4,13 @@
 @page "/"
 <PageTitle>Home</PageTitle>
 <h1 role="status">Current Score: @gameEngine.CurrentTotal</h1>
+<h1 role="status">ClickRate: @gameEngine.TotalClickRate</h1>
 @if (gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].CanUpgrade(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].Cost))
 {
     <button style="align-self: center; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("2 of Spades")'>Click Upgrade</button>
 }
-<button @onclick="() => gameEngine.IncrementCount()">Click Me!</button>
+<button style="background-image: url('King_Of_Spades.jpg'); width: 500px; height: 500px;" @onclick="() => gameEngine.IncrementCount()">Click Me!</button>
 
-<h3 style="border-color: red;">Hello</h3>
-
-<h3>Welcome to your new app.</h3>
 @code {
     protected override void OnInitialized()
     {

@@ -6,7 +6,11 @@ h3 {
 }
 h1 {
     color: red;
+}
+button {
+    color: red;
     border: dotted;
     border-color: blue;
-    margin: 0;
+    margin-top: 30%;
+    margin-left: 30%;
 }
