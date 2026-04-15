@@ -29,5 +29,10 @@ namespace CardClicker.Core
                 return true;
             }
         }
+        public int LogUpgrade(int currentTotal)
+        {
+            ClickRate = 2;
+            return currentTotal += (int)Math.Log(ClickRate);
+        }
     }
 }

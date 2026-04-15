@@ -26,7 +26,7 @@ namespace CardClicker.Core
         {
             if (UpgradeDictionary.Upgrades.TryGetValue(upgradeName, out IUpgrade upgrade))
             {
-                if (CurrentTotal >= upgrade.Cost)
+                if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost))
                 {
                     CurrentTotal -= upgrade.Cost;
                     TotalClickRate += upgrade.ClickRate;
@@ -39,11 +39,21 @@ namespace CardClicker.Core
         {
             for (int i = 1; i < 10; i++)
             {
-                ClickUpgrade = new ClickUpgrade((i + 2)^2, "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (i + 1) * 50);
-                AutomatedUpgrade = new AutomatedUpgrades($"{i + 1} of Hearts", "Automatically generates points every second.", (i + 10) * 50);
+                ClickUpgrade = new ClickUpgrade((int)Math.Pow(i, 2), "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (int)Math.Pow(i, 2) * 100);
+                AutomatedUpgrade = new AutomatedUpgrades($"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 100);
                 UpgradeDictionary.AddUpgrade(ClickUpgrade.Name, ClickUpgrade);
                 UpgradeDictionary.AddUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
             }
+        }
+        public int DoAutomatedUpgrades(AutomatedUpgrades upgrade)
+        {
+            return upgrade.LogUpgrade(CurrentTotal);
+        }
+        public void Timer()
+        {
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
+            timer.Elapsed += (sender, e) => DoAutomatedUpgrades(AutomatedUpgrade);
+            timer.Start();
         }
     }
 }
