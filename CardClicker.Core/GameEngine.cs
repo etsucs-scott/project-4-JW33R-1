@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,14 @@ namespace CardClicker.Core
         public ClickUpgrade ClickUpgrade { get; private set; }
         public AutomatedUpgrades AutomatedUpgrade { get; private set; }
         public int TotalClickRate { get; private set; } = 1;
+        public event Action? Change;
+        private System.Timers.Timer timer;
+        public void Timer()
+        {
+            timer = new System.Timers.Timer(100);
+            timer.Elapsed += (sender, e) => DoAutomatedUpgrades(AutomatedUpgrade);
+            timer.Start();
+        }
 
         public GameEngine()
         {
@@ -30,7 +39,6 @@ namespace CardClicker.Core
                 {
                     CurrentTotal -= upgrade.Cost;
                     TotalClickRate += upgrade.ClickRate;
-                    //UpgradeDictionary.RemoveUpgrade(upgradeName);
 
                 }
             }
@@ -45,15 +53,11 @@ namespace CardClicker.Core
                 UpgradeDictionary.AddUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
             }
         }
-        public int DoAutomatedUpgrades(AutomatedUpgrades upgrade)
+        public void DoAutomatedUpgrades(AutomatedUpgrades upgrade)
         {
-            return upgrade.LogUpgrade(CurrentTotal);
-        }
-        public void Timer()
-        {
-            System.Timers.Timer timer = new System.Timers.Timer(1000);
-            timer.Elapsed += (sender, e) => DoAutomatedUpgrades(AutomatedUpgrade);
-            timer.Start();
+
+            CurrentTotal += 1 + upgrade.LogUpgrade();
+            Change?.Invoke();
         }
     }
 }

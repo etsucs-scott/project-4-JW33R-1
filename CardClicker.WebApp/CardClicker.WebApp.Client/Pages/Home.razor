@@ -18,7 +18,17 @@
     protected override void OnInitialized()
     {
         gameEngine.AddUpgrades();
+        gameEngine.Change += HandleChange;
         gameEngine.Timer();
+
     }
+    private void HandleChange()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+    public void Dispose()
+    {
+        gameEngine.Change -= HandleChange;
+	}
 }
 
