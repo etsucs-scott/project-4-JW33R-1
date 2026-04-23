@@ -6,20 +6,19 @@
 <h1 role="status">Current Score: @gameEngine.CurrentTotal</h1>
 <h1 role="status">ClickRate: @gameEngine.TotalClickRate</h1>
 <div class="upgrades">
-    <button style="margin-left: 5%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("2 of Spades")'>Two Of Spades: @gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].Cost|ClickRate: @gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].ClickRate</button>
-    <button style="margin-left: 20%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("3 of Spades")'>Three Of Spades: @gameEngine.UpgradeDictionary.Upgrades["3 of Spades"].Cost|ClickRate: @gameEngine.UpgradeDictionary.Upgrades["3 of Spades"].ClickRate</button>
-    <button style="margin-left: 35%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("4 of Spades")'>Four Of Spades: @gameEngine.UpgradeDictionary.Upgrades["4 of Spades"].Cost|ClickRate: @gameEngine.UpgradeDictionary.Upgrades["4 of Spades"].ClickRate</button>
-    <button style="margin-left: 50%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("5 of Spades")'>Five Of Spades: @gameEngine.UpgradeDictionary.Upgrades["5 of Spades"].Cost|ClickRate: @gameEngine.UpgradeDictionary.Upgrades["5 of Spades"].ClickRate</button>
-    <button style="margin-left: 65%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("6 of Spades")'>Six Of Spades: @gameEngine.UpgradeDictionary.Upgrades["6 of Spades"].Cost|ClickRate: @gameEngine.UpgradeDictionary.Upgrades["6 of Spades"].ClickRate</button>
-    <button style="margin-left: 80%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("2 of Hearts")'>Two Of Hearts: @gameEngine.UpgradeDictionary.Upgrades["2 of Hearts"].Cost|ClickRate: @gameEngine.UpgradeDictionary.Upgrades["2 of Hearts"].ClickRate</button>
+    <button style="margin-left: 5%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("2 of Spades")'>Two Of Spades: @gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].Cost<br />ClickRate: @gameEngine.UpgradeDictionary.Upgrades["2 of Spades"].ClickRate</button>
+    <button style="margin-left: 15%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("3 of Spades")'>Three Of Spades: @gameEngine.UpgradeDictionary.Upgrades["3 of Spades"].Cost<br />ClickRate: @gameEngine.UpgradeDictionary.Upgrades["3 of Spades"].ClickRate</button>
+    <button style="margin-left: 25%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("4 of Spades")'>Four Of Spades: @gameEngine.UpgradeDictionary.Upgrades["4 of Spades"].Cost<br />ClickRate: @gameEngine.UpgradeDictionary.Upgrades["4 of Spades"].ClickRate</button>
+    <button style="margin-left: 35%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("5 of Spades")'>Five Of Spades: @gameEngine.UpgradeDictionary.Upgrades["5 of Spades"].Cost<br />ClickRate: @gameEngine.UpgradeDictionary.Upgrades["5 of Spades"].ClickRate</button>
+    <button style="margin-left: 45%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("6 of Spades")'>Six Of Spades: @gameEngine.UpgradeDictionary.Upgrades["6 of Spades"].Cost<br />ClickRate: @gameEngine.UpgradeDictionary.Upgrades["6 of Spades"].ClickRate</button>
+    <button style="margin-left: 55%; border-color: black;" @onclick='() => gameEngine.PurchaseUpgrade("2 of Hearts")'>Two Of Hearts: @gameEngine.UpgradeDictionary.Upgrades["2 of Hearts"].Cost<br />ClickRate: @gameEngine.UpgradeDictionary.Upgrades["2 of Hearts"].ClickRate</button>
 </div>
-<button style="background-image: url('King_Of_Spades.jpg'); width: 500px; height: 500px;" @onclick="() => gameEngine.IncrementCount()">Click Me!</button>
+<button style="background-image: url('/images/King_Of_Spades.jpg'); background-size: cover; background-repeat: no-repeat; width: 25vw; height: 50vh;" @onclick="() => gameEngine.IncrementCount()"></button>
 @code {
     protected override void OnInitialized()
     {
         gameEngine.AddUpgrades();
         gameEngine.Change += HandleChange;
-        gameEngine.Timer();
 
     }
     private void HandleChange()

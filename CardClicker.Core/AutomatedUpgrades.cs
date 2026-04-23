@@ -8,12 +8,15 @@ namespace CardClicker.Core
 {
     public class AutomatedUpgrades : IUpgrade
     {
+        public int Level { get; private set; }
+        public bool IsUnlocked { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int Cost { get; private set; }
         public int ClickRate { get; private set; }
-        public AutomatedUpgrades(string name, string description, int cost)
+        public AutomatedUpgrades(int clickRate, string name, string description, int cost)
         {
+            ClickRate = clickRate;
             Name = name;
             Description = description;
             Cost = cost;
@@ -33,6 +36,11 @@ namespace CardClicker.Core
         {
             ClickRate = 2;
             return (int)Math.Log(ClickRate);
+        }
+        public void IncreaseLevel()
+        {
+            Level++;
+            ClickRate += 1;
         }
     }
 }

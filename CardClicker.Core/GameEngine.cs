@@ -35,11 +35,16 @@ namespace CardClicker.Core
         {
             if (UpgradeDictionary.Upgrades.TryGetValue(upgradeName, out IUpgrade upgrade))
             {
-                if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost))
+                if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost) && upgrade.Level < 11)
                 {
                     CurrentTotal -= upgrade.Cost;
                     TotalClickRate += upgrade.ClickRate;
-
+                    upgrade.IncreaseLevel();
+                }
+                if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
+                {
+                    Timer();
+                    upgrade.IncreaseLevel();
                 }
             }
         }
@@ -48,7 +53,7 @@ namespace CardClicker.Core
             for (int i = 1; i < 10; i++)
             {
                 ClickUpgrade = new ClickUpgrade((int)Math.Pow(i, 2), "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (int)Math.Pow(i, 2) * 100);
-                AutomatedUpgrade = new AutomatedUpgrades($"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 100);
+                AutomatedUpgrade = new AutomatedUpgrades((int)Math.Pow(i - 1, 2), $"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 100);
                 UpgradeDictionary.AddUpgrade(ClickUpgrade.Name, ClickUpgrade);
                 UpgradeDictionary.AddUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
             }
@@ -56,7 +61,7 @@ namespace CardClicker.Core
         public void DoAutomatedUpgrades(AutomatedUpgrades upgrade)
         {
 
-            CurrentTotal += 1 + upgrade.LogUpgrade();
+            CurrentTotal += upgrade.ClickRate + upgrade.LogUpgrade();
             Change?.Invoke();
         }
     }

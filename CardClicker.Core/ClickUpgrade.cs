@@ -8,6 +8,8 @@ namespace CardClicker.Core
 {
     public class ClickUpgrade : IUpgrade
     {
+        public int Level { get; private set; }
+        public bool IsUnlocked { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int ClickRate { get; private set; }
@@ -33,6 +35,10 @@ namespace CardClicker.Core
         public void Upgrade(int currentScore)
         {
             currentScore += ClickRate;
+        }
+        public void IncreaseLevel()
+        {
+            Level++;
         }
     }
 }
