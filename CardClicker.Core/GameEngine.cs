@@ -74,7 +74,7 @@ namespace CardClicker.Core
             for (int i = 1; i < 10; i++)
             {
                 ClickUpgrade = new ClickUpgrade((int)Math.Pow(i, 2), "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (int)Math.Pow(i, 2) * 100);
-                AutomatedUpgrade = new AutomatedUpgrades((int)Math.Pow(i - 1, 2), $"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 100);
+                AutomatedUpgrade = new AutomatedUpgrades((int)Math.Pow(i - 1, 2), $"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 50);
                 UpgradeDictionary.AddBaseUpgrade(ClickUpgrade.Name, ClickUpgrade);
                 UpgradeDictionary.AddBaseUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
             }
