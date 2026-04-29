@@ -16,6 +16,16 @@
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+    <script>
+        window.downloadFile = (filename, content) => {
+          const a = document.createElement('a');
+          a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        };
+    </script>
 </body>
 
 </html>

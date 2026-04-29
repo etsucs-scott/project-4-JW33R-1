@@ -1,5 +1,6 @@
 using CardClicker.Core;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Magic.IndexedDb;
 
 namespace CardClicker.WebApp.Client
 {
@@ -10,6 +11,7 @@ namespace CardClicker.WebApp.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
             builder.Services.AddSingleton<GameEngine>();
+            builder.Services.AddMagicBlazorDB(BlazorInteropMode.WASM, builder.HostEnvironment.IsDevelopment()); //Puts the database in the browser's IndexedDB, and enables logging in development mode
             await builder.Build().RunAsync();
         }
     }

@@ -1,13 +1,34 @@
 ﻿@page "/Settings"
 @using CardClicker.Core
+@using System.Text.Json
 @rendermode InteractiveWebAssembly
+@inject IJSRuntime JS
 @inject GameEngine gameEngine
 
 <PageTitle>Settings</PageTitle>
 <h3 style="">Settings</h3>
-<button @onclick="() => fileHandling.SaveGame(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.BoughtUpgrades)">Save Game</button>
-<button @onclick="() => gameEngine.GiveValues(fileHandling.LoadGame())">Load Game</button>
+@* <button @onclick="() => SaveGame(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.BoughtUpgrades)">Save Game</button>
+<button @onclick="() => gameEngine.GiveValues(fileHandling.LoadGame())">Load Game</button> *@
+<button @onclick="Save">💾 Save</button>
+<InputFile OnChange="Load" />
+<p>@message</p>
 
 @code {
-    FileHandling fileHandling = new FileHandling();
+    string message = "";
+    // FileHandling fileHandling = new(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.BoughtUpgrades);
+
+    async Task Save() {
+        var data = new { Name = "John", Score = 42 };
+        var json = JsonSerializer.Serialize(data);
+        await JS.InvokeVoidAsync("downloadFile", "save.json", json);
+    }
+
+    async Task Load(InputFileChangeEventArgs e) {
+        using var stream = e.File.OpenReadStream();
+        using var reader = new StreamReader(stream);
+        var json = await reader.ReadToEndAsync();
+        var loaded = JsonSerializer.Deserialize<FileHandling>(json);
+        message = $"Loaded: {json}";
+    }
+}
 }
