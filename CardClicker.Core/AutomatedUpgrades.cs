@@ -34,13 +34,18 @@ namespace CardClicker.Core
         }
         public int LogUpgrade()
         {
-            ClickRate = 2;
+            ClickRate = 1;
             return (int)Math.Log(ClickRate);
         }
         public void IncreaseLevel()
         {
             Level++;
             ClickRate += 1;
+            Cost += (int)Math.Pow(Level, 2) * 200;
+        }
+        public void SetLevel(int level)
+        {
+            Level = level;
         }
     }
 }

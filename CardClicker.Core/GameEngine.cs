@@ -16,10 +16,10 @@ namespace CardClicker.Core
         public int TotalClickRate { get; private set; } = 1;
         public event Action? Change;
         private System.Timers.Timer timer;
-        public void Timer()
+        public void Timer(AutomatedUpgrades autoUpgrade)
         {
             timer = new System.Timers.Timer(100);
-            timer.Elapsed += (sender, e) => DoAutomatedUpgrades(AutomatedUpgrade);
+            timer.Elapsed += (sender, e) => DoAutomatedUpgrades(autoUpgrade);
             timer.Start();
         }
 
@@ -35,16 +35,37 @@ namespace CardClicker.Core
         {
             if (UpgradeDictionary.Upgrades.TryGetValue(upgradeName, out IUpgrade upgrade))
             {
-                if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost) && upgrade.Level < 11)
+                if (File.Exists("card_clicker.csv"))
                 {
-                    CurrentTotal -= upgrade.Cost;
-                    TotalClickRate += upgrade.ClickRate;
-                    upgrade.IncreaseLevel();
+                    if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
+                    {
+                        Timer((AutomatedUpgrades)upgrade);
+                        UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
+                        upgrade.SetLevel(upgrade.Level);
+                    }
+                    else if (upgrade.GetType() == typeof(ClickUpgrade) && upgrade.Level < 11)
+                    {
+                        TotalClickRate += upgrade.ClickRate;
+                        UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
+                        upgrade.SetLevel(upgrade.Level);
+                    }
                 }
-                if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
+                else if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost) && upgrade.Level < 11)
                 {
-                    Timer();
-                    upgrade.IncreaseLevel();
+                    if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
+                    {
+                        Timer((AutomatedUpgrades)upgrade);
+                        CurrentTotal -= upgrade.Cost;
+                        UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
+                        upgrade.IncreaseLevel();
+                    }
+                    else if (upgrade.GetType() == typeof(ClickUpgrade) && upgrade.Level < 11)
+                    {
+                        CurrentTotal -= upgrade.Cost;
+                        TotalClickRate += upgrade.ClickRate;
+                        UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
+                        upgrade.IncreaseLevel();
+                    }
                 }
             }
         }
@@ -54,15 +75,29 @@ namespace CardClicker.Core
             {
                 ClickUpgrade = new ClickUpgrade((int)Math.Pow(i, 2), "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (int)Math.Pow(i, 2) * 100);
                 AutomatedUpgrade = new AutomatedUpgrades((int)Math.Pow(i - 1, 2), $"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 100);
-                UpgradeDictionary.AddUpgrade(ClickUpgrade.Name, ClickUpgrade);
-                UpgradeDictionary.AddUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
+                UpgradeDictionary.AddBaseUpgrade(ClickUpgrade.Name, ClickUpgrade);
+                UpgradeDictionary.AddBaseUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
             }
         }
         public void DoAutomatedUpgrades(AutomatedUpgrades upgrade)
         {
 
-            CurrentTotal += upgrade.ClickRate + upgrade.LogUpgrade();
+            CurrentTotal += upgrade.ClickRate;//upgrade.LogUpgrade();
             Change?.Invoke();
+        }
+        public void GiveValues(string[] gameState)
+        {
+            CurrentTotal = int.Parse(gameState[0]);
+            if (gameState.Length > 1)
+            {
+                for (int i = 1; i < gameState.Length; i++)
+                {
+                    Console.WriteLine(gameState[i]);
+                    PurchaseUpgrade(gameState[i]);
+                }
+            }
+            gameState = Array.Empty<string>();
+
         }
     }
 }

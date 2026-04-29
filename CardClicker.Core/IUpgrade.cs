@@ -10,6 +10,7 @@ public interface IUpgrade
     public int Cost { get; }
     public int ClickRate { get; }
     public void IncreaseLevel();
+    public void SetLevel(int level);
 
 
 }

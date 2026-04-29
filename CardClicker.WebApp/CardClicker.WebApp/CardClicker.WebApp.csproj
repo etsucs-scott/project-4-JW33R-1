@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\CardClicker.Core\CardClicker.Core.csproj" />
     <ProjectReference Include="..\CardClicker.WebApp.Client\CardClicker.WebApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.14" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.51" />
   </ItemGroup>
 
 </Project>

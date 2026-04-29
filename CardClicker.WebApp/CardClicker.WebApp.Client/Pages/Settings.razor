@@ -1,10 +1,12 @@
 ﻿@page "/Settings"
 @using CardClicker.Core
+@rendermode InteractiveWebAssembly
 @inject GameEngine gameEngine
 
 <PageTitle>Settings</PageTitle>
 <h3 style="">Settings</h3>
-@* <button @onclick="() => fileHandling.SaveGame(gameEngine.CurrentTotal, )">Save Game</button> *@
+<button @onclick="() => fileHandling.SaveGame(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.BoughtUpgrades)">Save Game</button>
+<button @onclick="() => gameEngine.GiveValues(fileHandling.LoadGame())">Load Game</button>
 
 @code {
     FileHandling fileHandling = new FileHandling();

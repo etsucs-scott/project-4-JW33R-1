@@ -39,6 +39,11 @@ namespace CardClicker.Core
         public void IncreaseLevel()
         {
             Level++;
+            Cost += (int)Math.Pow(Level, 2) * 100;
+        }
+        public void SetLevel(int level)
+        {
+            Level = level;
         }
     }
 }
