@@ -85,18 +85,18 @@ namespace CardClicker.Core
             CurrentTotal += upgrade.ClickRate;//upgrade.LogUpgrade();
             Change?.Invoke();
         }
-        public void GiveValues(string[] gameState)
+        public void GiveValues(int currentTotal, List<string> upgradeNames)
         {
-            CurrentTotal = int.Parse(gameState[0]);
-            if (gameState.Length > 1)
+            CurrentTotal = currentTotal;
+            if (upgradeNames.Count > 1)
             {
-                for (int i = 1; i < gameState.Length; i++)
+                for (int i = 1; i < upgradeNames.Count; i++)
                 {
-                    Console.WriteLine(gameState[i]);
-                    PurchaseUpgrade(gameState[i]);
+                    Console.WriteLine(upgradeNames[i]);
+                    PurchaseUpgrade(upgradeNames[i]);
                 }
             }
-            gameState = Array.Empty<string>();
+            upgradeNames = new List<string>();
 
         }
     }

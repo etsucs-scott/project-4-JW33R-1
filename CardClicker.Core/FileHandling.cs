@@ -5,21 +5,11 @@ namespace CardClicker.Core
 {
     public class FileHandling
     {
-        public FileHandling()
+        public List<string> SaveGame(Dictionary<string, IUpgrade> upgradeNames)
         {
-
+            var savedGame = upgradeNames.Keys.ToList();
+            return savedGame;
         }
-        //    public string[] LoadGame()
-        //    {
-        //        var fileName = GetPath();
-        //        if (File.Exists(fileName))
-        //        {
-        //            Console.WriteLine("Game loaded successfully.");
-        //            return File.ReadAllLines(fileName);
-        //        }
-        //        Console.WriteLine("No saved game found.");
-        //        return Array.Empty<string>();
-        //    }
 
     }
 }

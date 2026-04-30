@@ -15,20 +15,25 @@
 
 @code {
     string message = "";
-    // FileHandling fileHandling = new(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.BoughtUpgrades);
+    FileHandling fileHandling = new FileHandling();
+    public Stat thereisIt()
+    {
+        return new Stat(gameEngine.CurrentTotal, fileHandling.SaveGame(gameEngine.UpgradeDictionary.BoughtUpgrades));
+    } 
 
     async Task Save() {
-        var data = new { Name = "John", Score = 42 };
+        var data = thereisIt();
         var json = JsonSerializer.Serialize(data);
-        await JS.InvokeVoidAsync("downloadFile", "save.json", json);
+        await JS.InvokeVoidAsync("downloadFile", "card_clicker.json", json);
     }
 
     async Task Load(InputFileChangeEventArgs e) {
         using var stream = e.File.OpenReadStream();
         using var reader = new StreamReader(stream);
         var json = await reader.ReadToEndAsync();
-        var loaded = JsonSerializer.Deserialize<FileHandling>(json);
+        var loaded = JsonSerializer.Deserialize<Stat>(json);
         message = $"Loaded: {json}";
+        gameEngine.GiveValues(loaded.CurrentTotal, loaded.UpgradeNames);
     }
 }
 }
