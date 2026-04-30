@@ -10,10 +10,12 @@ namespace CardClicker.Core
     {
         public int CurrentTotal { get; private set; }
         public List<string> UpgradeNames { get; private set; }
-        public Stat(int currentTotal, List<string> upgradeNames)
+        public List<int> Levels { get; private set; }
+        public Stat(int currentTotal, List<string> upgradeNames, List<int> levels)
         {
             CurrentTotal = currentTotal;
             UpgradeNames = upgradeNames;
+            Levels = levels;
         }
     }
 }

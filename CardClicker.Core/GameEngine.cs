@@ -31,26 +31,29 @@ namespace CardClicker.Core
         {
             return CurrentTotal += TotalClickRate;
         }
+        public void PurchaseUpgradeFromFile(string upgradeName, int level)
+        {
+            if (UpgradeDictionary.Upgrades.TryGetValue(upgradeName, out var upgrade))
+            {
+                if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
+                {
+                    Timer((AutomatedUpgrades)upgrade);
+                    UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
+                    upgrade.SetLevel(level);
+                }
+                else if (upgrade.GetType() == typeof(ClickUpgrade) && upgrade.Level < 11)
+                {
+                    TotalClickRate += upgrade.ClickRate;
+                    UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
+                    upgrade.SetLevel(level);
+                }
+            }
+        }
         public void PurchaseUpgrade(string upgradeName)
         {
             if (UpgradeDictionary.Upgrades.TryGetValue(upgradeName, out IUpgrade upgrade))
             {
-                if (File.Exists("card_clicker.csv"))
-                {
-                    if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
-                    {
-                        Timer((AutomatedUpgrades)upgrade);
-                        UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
-                        upgrade.SetLevel(upgrade.Level);
-                    }
-                    else if (upgrade.GetType() == typeof(ClickUpgrade) && upgrade.Level < 11)
-                    {
-                        TotalClickRate += upgrade.ClickRate;
-                        UpgradeDictionary.AddBoughtUpgrade(upgradeName, upgrade);
-                        upgrade.SetLevel(upgrade.Level);
-                    }
-                }
-                else if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost) && upgrade.Level < 11)
+                if (upgrade.CanUpgrade(CurrentTotal, upgrade.Cost) && upgrade.Level < 11)
                 {
                     if (upgrade.GetType() == typeof(AutomatedUpgrades) && upgrade.Level < 11)
                     {
@@ -85,15 +88,15 @@ namespace CardClicker.Core
             CurrentTotal += upgrade.ClickRate;//upgrade.LogUpgrade();
             Change?.Invoke();
         }
-        public void GiveValues(int currentTotal, List<string> upgradeNames)
+        public void GiveValues(int currentTotal, List<string> upgradeNames, List<int> levels)
         {
             CurrentTotal = currentTotal;
-            if (upgradeNames.Count > 1)
+            if (upgradeNames.Count > 0)
             {
-                for (int i = 1; i < upgradeNames.Count; i++)
+                for (int i = 0; i < upgradeNames.Count; i++)
                 {
                     Console.WriteLine(upgradeNames[i]);
-                    PurchaseUpgrade(upgradeNames[i]);
+                    PurchaseUpgradeFromFile(upgradeNames[i], levels[i]);
                 }
             }
             upgradeNames = new List<string>();
