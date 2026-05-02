@@ -7,8 +7,6 @@
 
 <PageTitle>Settings</PageTitle>
 <h3 style="">Settings</h3>
-@* <button @onclick="() => SaveGame(gameEngine.CurrentTotal, gameEngine.UpgradeDictionary.BoughtUpgrades)">Save Game</button>
-<button @onclick="() => gameEngine.GiveValues(fileHandling.LoadGame())">Load Game</button> *@
 <button @onclick="Save">Save</button>
 <InputFile OnChange="Load" />
 <p>@message</p>
@@ -16,13 +14,13 @@
 @code {
     string message = "";
     FileHandling fileHandling = new FileHandling();
-    public Stat thereisIt()
+    public Stat StatForSaving()
     {
         return new Stat(gameEngine.CurrentTotal, fileHandling.SaveGame(gameEngine.UpgradeDictionary.BoughtUpgrades), fileHandling.SavedLevels(gameEngine.UpgradeDictionary.BoughtUpgrades));
     } 
 
     async Task Save() {
-        var data = thereisIt();
+        var data = StatForSaving();
         var json = JsonSerializer.Serialize(data);
         await JS.InvokeVoidAsync("downloadFile", "card_clicker.json", json);
     }

@@ -11,8 +11,6 @@ namespace CardClicker.Core
     {
         public int CurrentTotal { get; private set; }
         public UpgradeDictionary UpgradeDictionary { get; private set; }
-        public ClickUpgrade ClickUpgrade { get; private set; }
-        public AutomatedUpgrades AutomatedUpgrade { get; private set; }
         public int TotalClickRate { get; private set; } = 1;
         public event Action? Change;
         private System.Timers.Timer timer;
@@ -76,16 +74,16 @@ namespace CardClicker.Core
         {
             for (int i = 1; i < 10; i++)
             {
-                ClickUpgrade = new ClickUpgrade((int)Math.Pow(i, 2), "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (int)Math.Pow(i, 2) * 100);
-                AutomatedUpgrade = new AutomatedUpgrades((int)Math.Pow(i - 1, 2), $"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 50);
-                UpgradeDictionary.AddBaseUpgrade(ClickUpgrade.Name, ClickUpgrade);
-                UpgradeDictionary.AddBaseUpgrade(AutomatedUpgrade.Name, AutomatedUpgrade);
+                ClickUpgrade clickUpgrade = new ClickUpgrade((int)Math.Pow(i, 2), "Increases the amount of points per click by 1.", $"{i + 1} of Spades", (int)Math.Pow(i, 2) * 100);
+                AutomatedUpgrades automatedUpgrade = new AutomatedUpgrades((int)Math.Pow(i - 1, 2), $"{i + 1} of Hearts", "Automatically generates points every second.", (int)Math.Pow(i, 2) * 50);
+                UpgradeDictionary.AddBaseUpgrade(clickUpgrade.Name, clickUpgrade);
+                UpgradeDictionary.AddBaseUpgrade(automatedUpgrade.Name, automatedUpgrade);
             }
         }
         public void DoAutomatedUpgrades(AutomatedUpgrades upgrade)
         {
 
-            CurrentTotal += upgrade.ClickRate;//upgrade.LogUpgrade();
+            CurrentTotal += upgrade.ClickRate;
             Change?.Invoke();
         }
         public void GiveValues(int currentTotal, List<string> upgradeNames, List<int> levels)
