@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CardClicker.Core
 {
+    /// <summary>
+    /// Used to put into the json file to save the user's progress
+    /// </summary>
     public class Stat
     {
         public int CurrentTotal { get; private set; }

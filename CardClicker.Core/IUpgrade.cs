@@ -1,5 +1,7 @@
 ﻿namespace CardClicker.Core;
-
+/// <summary>
+/// Used to show what functions and properties a Upgrade Class needs
+/// </summary>
 public interface IUpgrade
 {
     public int Level { get; }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CardClicker.Core
 {
+    /// <summary>
+    /// Outline for the click upgrade
+    /// </summary>
     public class ClickUpgrade : IUpgrade
     {
         public int Level { get; private set; }
@@ -20,6 +23,12 @@ namespace CardClicker.Core
             Name = name;
             Cost = cost;
         }
+        /// <summary>
+        /// Makes sure the user can upgrade based on amount of money compared to cost of upgrade
+        /// </summary>
+        /// <param name="totalScore"></param>
+        /// <param name="upgradeCost"></param>
+        /// <returns></returns>
         public bool CanUpgrade(int totalScore, int upgradeCost)
         {
             if (totalScore < upgradeCost)
@@ -31,19 +40,38 @@ namespace CardClicker.Core
                 return true;
             }
         }
+        /// <summary>
+        /// Upgrades the clickrate
+        /// </summary>
+        /// <param name="currentScore"></param>
         public void Upgrade(int currentScore)
         {
             currentScore += ClickRate;
         }
+        /// <summary>
+        /// Increases the level of the upgrade
+        /// </summary>
         public void IncreaseLevel()
         {
             Level++;
             Cost += (int)Math.Pow(Level, 2) * 100;
         }
+        /// <summary>
+        /// Sets the level of the upgrade based on data from a file
+        /// </summary>
+        /// <param name="level"></param>
         public void SetLevel(int level)
         {
-            Level = level;
-            Cost += (int)Math.Pow(Level, 2) * 200;
+            if (level > 11)
+            {
+                Level = 0;
+            }
+            else
+            {
+                Level = level;
+                ClickRate += level;
+                Cost += (int)Math.Pow(Level, 2) * 200;
+            }
         }
     }
 }

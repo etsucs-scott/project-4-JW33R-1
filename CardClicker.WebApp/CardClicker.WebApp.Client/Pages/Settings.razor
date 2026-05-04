@@ -19,19 +19,26 @@
         return new Stat(gameEngine.CurrentTotal, fileHandling.SaveGame(gameEngine.UpgradeDictionary.BoughtUpgrades), fileHandling.SavedLevels(gameEngine.UpgradeDictionary.BoughtUpgrades));
     } 
 
-    async Task Save() {
+    public async Task Save() {
         var data = StatForSaving();
         var json = JsonSerializer.Serialize(data);
         await JS.InvokeVoidAsync("downloadFile", "card_clicker.json", json);
     }
 
-    async Task Load(InputFileChangeEventArgs e) {
+    public async Task Load(InputFileChangeEventArgs e) {
         using var stream = e.File.OpenReadStream();
         using var reader = new StreamReader(stream);
         var json = await reader.ReadToEndAsync();
         var loaded = JsonSerializer.Deserialize<Stat>(json);
-        message = $"Loaded: {json}";
-        gameEngine.GiveValues(loaded.CurrentTotal, loaded.UpgradeNames, loaded.Levels);
+        if (e.File.Name == "card_clicker.json")
+        {
+            message = $"Loaded: {e.File.Name}";
+            gameEngine.GiveValues(loaded.CurrentTotal, loaded.UpgradeNames, loaded.Levels);
+        }
+        else
+        {
+            message = $"Failed to load, Can only load 'card_clicker.json' files not duplicates of it";
+        }
     }
 }
 }
