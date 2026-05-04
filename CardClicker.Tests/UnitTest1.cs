@@ -27,19 +27,6 @@ namespace CardClicker.Tests
             Assert.NotEmpty(gameEngine.UpgradeDictionary.BoughtUpgrades);
         }
         [Fact]
-        public void TryLoadFileWithWrongName()
-        {
-            Settings settings = new Settings();
-            
-
-            settings.Load();
-        }
-        //[Fact]
-        //public void TryLoadFileWithRightName()
-        //{
-
-        //}
-        [Fact]
         public void TryToBuyUpgradeWithoutEnoughPoints()
         {
             GameEngine game = new();
