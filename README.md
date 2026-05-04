@@ -1,43 +1,30 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/qJo95Bxr)
-# CSCI 1260 — Project
-
-## Project Instructions
-All project requirements, grading criteria, and submission details are provided on **D2L**.  
-Refer to D2L as the *authoritative source* for this assignment.
-
-This repository is intentionally minimal. You are responsible for:
-- Creating the solution and projects
-- Designing the class structure
-- Implementing the required functionality
-
----
-
-## Getting Started (CLI)
-
-You may use **Visual Studio**, **VS Code**, or the **terminal**.
-
-### Create a solution
-```bash
-dotnet new sln -n ProjectName
+# CSCI 1260 — Incremental Game
+```Bash
+This is a simple clicker game with the ability to buy upgrades and have automated upgrades.
+You have the ability to save progress and load it back in.
 ```
 
-### Create a project (example: console app)
-```bash
-dotnet new console -n ProjectName.App
+## Tech Stack
+```Bash
+For this project I used Blazor. With that said that means I used C#, HTML, and CSS.
 ```
 
-### Add the project to the solution
-```bash
-dotnet sln add ProjectName.App
-```
+## How to build and Run the Project
+```Bash
+git clone https://github.com/etsucs-scott/project-4-JW33R-1.git
+dotnet run --project CardClicker.WebApp/CardClicker.WebApp
 
-### Build and run
-```bash
-dotnet build
-dotnet run --project ProjectName.App
-```
+In order to run the unit tests if using VS 2022 just go to the top of the screen and click tests and click run all
+``` 
 
-## Notes
-- Commit early and commit often.
-- Your repository history is part of your submission.
-- Update this README with build/run instructions specific to your project.
+## Key Features and Data Stored
+```Bash
+Data is stored inside of a JSON which is downloaded to your computer.
+Some features are the ability to upgrade your Click Rate and the addition of automated upgrades where you don't need to click.
+```
+## External Sources
+```Bash
+I haven't used CSS before so I used Bro Code's video in order to learn it. I also haven't used Blazor before so I used a little bit of IAmTimCorey's video
+https://www.youtube.com/watch?v=8DNgdphLvag&t=1488s
+https://www.youtube.com/watch?v=wRNinF7YQqQ
+```
